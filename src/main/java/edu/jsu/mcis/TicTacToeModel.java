@@ -3,11 +3,14 @@ package edu.jsu.mcis;
 public class TicTacToeModel {
 
     public int[][] grid;
-    private boolean xTurn = true;
+    public boolean xTurn = true;
     private int turnCounter;
     public String Winner = "";
+    private TicTacToeView View;
 
-    public TicTacToeModel() {
+    public TicTacToeModel(){
+        
+        View = new TicTacToeView(this);
         grid = new int[3][3];
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -16,6 +19,7 @@ public class TicTacToeModel {
         }
         turnCounter = 0;
         xTurn = true;
+     
     }
 
     public int getMark(int row, int col) {
@@ -42,30 +46,37 @@ public class TicTacToeModel {
         switch (CheckForWin()) {
             case 0:
                 Winner = "";
+                View.resultLabel.setText("No Winner");
                 break;
             case 1:
                 if (xTurn) {
                     Winner = "X";
+                    View.resultLabel.setText("X");
                 } else {
                     Winner = "O";
+                    View.resultLabel.setText("O");
                 }
                 break;
             case 2:
                 Winner = "TIE";
+                View.resultLabel.setText("TIE");
+                break;
+            default:
+                View.resultLabel.setText("default");
                 break;
 
         }
-        
+
         xTurn = !xTurn;
     }
 
     public int CheckForWin() {
 
         if (CheckHorizontalWin()) {
-            return 1; 
+            return 1;
         }
         if (CheckVerticalWin()) {
-            return 1; 
+            return 1;
         }
         if (CheckDiagonal1()) {
             return 1;
@@ -74,9 +85,9 @@ public class TicTacToeModel {
             return 1;
         }
         if (CheckTieIfAllFilled()) {
-            return 2; 
+            return 2;
         }
-        return 0; 
+        return 0;
 
     }
 
@@ -130,7 +141,7 @@ public class TicTacToeModel {
         d = grid[0][2];
         e = grid[1][1];
         f = grid[2][0];
-        if ((d == e) && (e == f)&& (f != 0) ) {
+        if ((d == e) && (e == f) && (f != 0)) {
             return true;
 
         }

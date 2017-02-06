@@ -1,6 +1,8 @@
-buildscript {
+buildscript {  
     dependencies {
         classpath files(mkdir('build/classes/main'))
+        classpath group: "org.robotframework", name: "swinglibrary", version: "1.9.6"
+     
     }
 }
 
@@ -57,3 +59,6 @@ if(hasProperty("Xlint:unchecked")) {
         options.compilerArgs << "-Xlint:unchecked" 
     }
 }
+
+runrobot.debugfile = 'debug.log'
+runrobot.dependsOn build
